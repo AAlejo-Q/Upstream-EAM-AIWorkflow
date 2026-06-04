@@ -3,7 +3,7 @@
 > **Version:** 1.4 | **Last Updated:** 2026-06-03
 > **Load this file:** When writing ACs that reference EAM wiki sections, when drafting -01 or -02 mandatory ACs, or when you need the standard validation pair templates.
 > **What this file covers:** Full wiki anchor reference table (§1–§25), -01 mandatory AC templates, -02 standard validation pair templates, combined grid defaults AC, QA/Parity story structure, business rules phrasing guide.
-> **v1.4 changes (2026-06-03):** §24 Import from Excel is now mandatory on all input grid stories (previously PO-flagged only). Added New Record Creation (§6) as mandatory AC for input grid -01 stories. Updated Section 1 and Section 3 grid defaults AC templates to include Import bullet and §24 reference link. Omit §24 only for read-only grids.
+> **v1.4 changes (2026-06-03):** §24 Import from Excel is now mandatory on all input grid stories (previously PO-flagged only). Added New Record Creation (§6) as mandatory AC for input grid -01 stories. Updated Section 1 and Section 3 grid defaults AC templates to include Import bullet and §24 reference link. Omit §24 only for read-only grids. Grid defaults AC placement rule corrected: only in the story that introduces each grid (typically -01), not repeated in -02 or subsequent stories.
 > **v1.2 changes (2026-05-20):** Section 4 fully rewritten — (1) Classic screen retirement language removed throughout: no retirement bullet in Functional Scope, no retirement or sign-off language in the SME confirmation AC, no "Classic GUI is no longer required" framing anywhere in the template (originated from Asher Maddox, 2026-05-19). (2) QA story framing shifted from Classic parity comparison to web screen behavior verification: "behaves correctly across all functional dimensions", Classic GUI repositioned as an optional side-by-side reference not required for testing. (3) AC persona convention: all AC GWT blocks use "I" (first person); the SME confirmation AC is the only exception, referring to "a revenue accountant SME" as a distinct named role. (4) Standard SME confirmation AC template added as the mandatory closing AC for all QA/Parity stories.
 
 ---
@@ -46,7 +46,7 @@ https://dev.azure.com/QuorumSoftware/Quorum/_wiki/wikis/Quorum.wiki/11638/?wikiV
 | 25 | Bulk View/Edit (All Grids) | `25.-bulk-view%2fedit-(all-grids)` | Bulk View/Edit mode — **mandatory on all grid stories** |
 | 26 | Retrieve / More / All | `26.-retrieve-%2F-more-%2F-all` | Retrieve/More/All progressive loading — **mandatory -01 AC** |
 
-> **§21–§25 are mandatory on ALL grid stories.** Every story that includes a grid (query, CRUD, child grid, or batch selection) must include the combined §21/§22/§23/§24/§25 AC as the last functional AC. §24 (Import) is mandatory on all input grid stories; omit §24 only for read-only grids.
+> **§21–§25 are mandatory on ALL grid stories.** The story that introduces each grid must include the combined §21/§22/§23/§24/§25 AC as the last functional AC — typically -01 for the main screen grid(s), and the audit history story for audit history grids. Do NOT repeat the grid defaults AC in subsequent stories (-02 validations, -03+ special) that operate on the same grid already established. §24 (Import) is mandatory on all input grid stories; omit §24 only for read-only grids.
 
 ---
 
@@ -348,7 +348,7 @@ Some screens trigger automatic system-managed operations after a successful save
 
 ## Section 3: Combined Grid Defaults AC (All Grid Stories)
 
-Place this as the **last functional AC** in every story that contains a grid. Adjust the Bulk View/Edit closing options based on grid type.
+Place this as the **last functional AC** in the story that introduces each grid. Adjust the Bulk View/Edit closing options based on grid type.
 
 ```html
 <p><strong>AC[N] — Grid interaction defaults (export, import, highlight, copy, bulk view/edit):</strong></p>
@@ -567,7 +567,7 @@ In Classic GUI these were two separate Links menu options. In the web, they are 
 **AC6 — Read-only enforcement:**
 - Given: on Audit History screen on either tab
 - When: attempt to interact with any row
-- Then (single inline): no add, edit, or delete actions available — both tabs are strictly read-only
+- Then (single inline): no add, edit, or delete actions are available — both tabs are strictly read-only
 
 **AC7 — No records state (both tabs):**
 - Given: navigate to Audit History for a record with no change events, or Delete History has no deleted records

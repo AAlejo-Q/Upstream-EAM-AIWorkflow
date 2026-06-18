@@ -1,4 +1,1 @@
----
-name: eam-user-story-template
-description: "Template for generating EAM User Story drafts in Azure DevOps. Use when asked to generate, draft, write, or create user stories, story maps, or work items for any EAM screen migration. Also triggers on: 'draft stories for [screen]', 'create a story map', 'write user stories'. v6.1 standard: -01 Foundation+Nav+CRUD, -02 BRs with standard validation patterns, -03+ Special, -QA last. Satellites: -Security (Feature 1786977), -API (Feature 1806481). No security in numbered stories. Successor links chain -01 to -QA. Mandatory -01 ACs: navigation+menu (§16); query+results+empty (§1+§4); record view & selection+retrieve/more/all (§26) standalone; pagination+grid defaults (§3+§21/§22/§23/§25) as last AC with 100-record default, dropdown to 200. Mandatory -02 patterns: required fields, entity existence, duplicate prevention, pick list integrity. Always presented for review before ADO creation. No SP estimation — sizing is the team's responsibility."
----
+PLACEHOLDER_WILL_BE_REPLACED

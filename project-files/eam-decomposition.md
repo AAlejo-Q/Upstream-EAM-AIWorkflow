@@ -1,8 +1,9 @@
 # EAM Story Decomposition Guide
 
-> **Version:** 1.0 | **Last Updated:** 2026-05-14
+> **Version:** 1.1 | **Last Updated:** 2026-06-18
 > **Load this file:** When planning a new story map — before presenting the story plan in Phase 2. Not needed for single ad-hoc story fixes.
 > **What this file covers:** Universal story sequence, special capability slots, consolidation rules, SP estimation heuristics, risk levels, open questions checklist.
+> **v1.1 changes (2026-06-18):** (1) **Audit History excluded** — Audit History stories are no longer created per-screen; all Audit History will be handled as a batch later. Slot -04 removed from the universal sequence; PPN renumbered to -04, Other Special to -05+. (2) **"EAM" tag removed** — stories are no longer tagged with the standalone "EAM" tag; only the `eam-phase-*` tags are applied.
 
 ---
 
@@ -15,11 +16,12 @@ All screens — regardless of migration pattern (Lift and Shift, Redesign, or Co
 | 01 | Foundation + CRUD | `[ScreenID]-01: Screen Foundation, Navigation & Record CRUD` | `eam-phase-ui-crud` | Screen's functional Feature | ✅ Chain start |
 | 02 | Business Rules | `[ScreenID]-02: Business Rules and Validations` | `eam-phase-validations` | Screen's functional Feature | ✅ |
 | 03 | Notes | `[ScreenID]-03: Notes` | `eam-phase-special` | Screen's functional Feature | ✅ |
-| 04 | Audit History | `[ScreenID]-04: Audit History — Change History & Deleted Records Viewer` | `eam-phase-special` | Screen's functional Feature | ✅ |
-| 05 | PPN | `[ScreenID]-05: PPN Triggers and Creation` | `eam-phase-special` | Screen's functional Feature | ✅ |
-| 06+ | Special | `[ScreenID]-06: [Special Functionality Name]` | `eam-phase-special` | Screen's functional Feature | ✅ |
+| 04 | PPN | `[ScreenID]-04: PPN Triggers and Creation` | `eam-phase-special` | Screen's functional Feature | ✅ |
+| 05+ | Special | `[ScreenID]-05: [Special Functionality Name]` | `eam-phase-special` | Screen's functional Feature | ✅ |
 | Last | QA | `[ScreenID]-[N]: Testing & QA Parity` | `eam-phase-qa` | Screen's functional Feature | ✅ Chain end |
 | Security | Security satellite | `[ScreenID]-Security: Security & Access Control` | `eam-phase-security` | **Feature 1786977** | ❌ Excluded |
+
+> **Audit History excluded from per-screen story creation.** Audit History screens will be worked on as a whole later. Do not create Audit History stories when authoring a screen's story map. If a screen has Audit History capability, note it in the generation log but do not create a story for it.
 
 > Security satellite stories use a 4-AC structure (menu navigation, full access, read-only, no access = not visible in menu). See `eam-ac-library.md` Section 7 for the complete standard. Use "security group" not "role". Do not reference QARCH.
 
@@ -28,7 +30,8 @@ All screens — regardless of migration pattern (Lift and Shift, Redesign, or Co
 - **Foundation + Navigation + CRUD always merged** into -01. Title always: `[ScreenID]-01: Screen Foundation, Navigation & Record CRUD`.
 - **No security content in numbered stories** — all numbered stories (-01 through -QA) assume the user has complete access. Security analysis lives exclusively in the `-Security` satellite.
 - **Business Rules always -02, standalone** — never merged with CRUD. Allows parallel dev pickup.
-- **Special stories follow fixed order** — Notes (-03), Audit History (-04), PPN (-05), Other (-06+). Skip slots that don't apply and continue numbering sequentially.
+- **Special stories follow fixed order** — Notes (-03), PPN (-04), Other (-05+). Skip slots that don't apply and continue numbering sequentially.
+- **Audit History excluded** — do not create Audit History stories; these will be handled as a batch later.
 - **QA always last numbered story** — title: `[ScreenID]-[N]: Testing & QA Parity`.
 - **Security satellite always under Feature 1786977** — never the screen's functional Feature.
 - **Successor links mandatory** — chain numbered stories (-01 → -02 → ... → -QA) after creation. Satellites excluded.
@@ -53,10 +56,9 @@ All screens — regardless of migration pattern (Lift and Shift, Redesign, or Co
 JE020-01: Screen Foundation, Navigation & Record CRUD
 JE020-02: Business Rules and Validations
 JE020-03: Notes
-JE020-03: Audit History — Change History & Deleted Records Viewer
-JE020-05: PPN Triggers and Creation
-JE020-06: Mass Changes
-JE020-07: Testing & QA Parity
+JE020-04: PPN Triggers and Creation
+JE020-05: Mass Changes
+JE020-06: Testing & QA Parity
 JE020-Security: Security & Access Control
 ```
 
@@ -74,9 +76,10 @@ Each slot is added only when the screen has that capability. Skip inapplicable s
 | Slot | Capability | Trigger Condition |
 |------|-----------|-------------------|
 | -03 | Notes | Screen has a user notes/comments panel |
-| -04 | Audit History | Screen records field-level change history viewable by users. See `eam-ac-library.md` Section 6 for the mandatory 8-AC two-tab standard (Change History tab = record-scoped; Delete History tab = entity-wide). |
-| -05 | PPN | Screen generates Prior Period Notification records |
-| -06+ | Other Special | Mass Changes dialog, Batch Integration, Child Grid management, Advanced Business Rules, File Upload, or any other distinct special capability |
+| -04 | PPN | Screen generates Prior Period Notification records |
+| -05+ | Other Special | Mass Changes dialog, Batch Integration, Child Grid management, Advanced Business Rules, File Upload, or any other distinct special capability |
+
+> **Audit History is excluded.** Do not assign a slot for Audit History. If a screen has Audit History capability, note it in the generation log but skip the slot.
 
 ---
 
@@ -86,10 +89,8 @@ Each slot is added only when the screen has that capability. Skip inapplicable s
 |---|---|---|
 | No special functionality | -01, -02, -[N] QA | -Security |
 | With Notes only | -01, -02, -03 Notes, -[N] QA | -Security |
-| With Audit History only | -01, -02, -04 Audit History, -[N] QA | -Security |
-| With Notes + Audit History | -01, -02, -03 Notes, -04 Audit, -[N] QA | -Security |
-| With Notes + Audit + PPN | -01, -02, -03, -04, -05 PPN, -[N] QA | -Security |
-| Full special stack | -01, -02, -03, -04, -05, -06+ Other, -[N] QA | -Security |
+| With Notes + PPN | -01, -02, -03 Notes, -04 PPN, -[N] QA | -Security |
+| Full special stack | -01, -02, -03 Notes, -04 PPN, -05+ Other, -[N] QA | -Security |
 
 ---
 
@@ -100,9 +101,9 @@ The migration pattern affects story count and complexity, not structure.
 | Pattern | Baseline | Typical Count | Guidance |
 |---|---|---|---|
 | Lift and Shift | -01, -02, -QA + satellites | 3–4 numbered + 1 satellite | Fewest special stories; consolidate aggressively |
-| Lift and Shift with minor redesign | -01, -02, specials as needed, -QA + satellites | 4–7 numbered + 1 satellite | Add special stories only for capabilities that differ from Classic |
-| Redesign | -01, -02, specials as needed, -QA + satellites | 5–9 numbered + 1 satellite | May need child grid, advanced rules, or dynamic UX stories |
-| Combine (2+ screens) | -01, -02, specials as needed, -QA + satellites | 7–11 numbered + 1 satellite | Add one story per merged screen's unique workflow |
+| Lift and Shift with minor redesign | -01, -02, specials as needed, -QA + satellites | 4–6 numbered + 1 satellite | Add special stories only for capabilities that differ from Classic |
+| Redesign | -01, -02, specials as needed, -QA + satellites | 5–8 numbered + 1 satellite | May need child grid, advanced rules, or dynamic UX stories |
+| Combine (2+ screens) | -01, -02, specials as needed, -QA + satellites | 7–10 numbered + 1 satellite | Add one story per merged screen's unique workflow |
 
 ---
 
@@ -127,7 +128,7 @@ Bias toward consolidation — fewer, broader stories are easier to plan, pick up
 | Contextual Navigation (< 2 SP) + Foundation+CRUD | ✅ Yes | Navigation is incidental; no dedicated story |
 | Query + Pagination | ✅ Yes | Pagination is inherent to Query, always in -01 |
 | Notes/Comments + Foundation+CRUD (standard notes pattern) | ✅ Yes | If notes use standard wiki §12 pattern with no extra behavior |
-| Core Rules + Advanced Rules (combined > 8 SP or > 10 rules) | ❌ No | Split into -02 Core + -06 Advanced |
+| Core Rules + Advanced Rules (combined > 8 SP or > 10 rules) | ❌ No | Split into -02 Core + -05 Advanced |
 | Field Behavior (status-driven, complex) + Foundation+CRUD | ❌ No | Complex field enable/disable logic needs a dedicated story |
 | PPN Audit Trail + Business Rules | ❌ No | Audit trail is separate system responsibility |
 | Security + any numbered story | ❌ Never | Security always standalone satellite under Feature 1786977 |
@@ -152,13 +153,13 @@ Split by natural user workflow. This is the standard v6.1 decomposition: Foundat
 
 When a screen has 10+ rules and combined SP > 8, split into:
 - -02: Core Rules (required fields, basic validation, auto-population)
-- -06: Advanced Rules (cross-table lookups, cascade operations, effective date overlap, guard conditions)
+- -05: Advanced Rules (cross-table lookups, cascade operations, effective date overlap, guard conditions)
 
 ### Pattern 3: Parent-Child Tables
 
 When a screen manages multiple related tables:
 - -01: Header/parent table CRUD
-- -03 (or -06): Child table(s) CRUD — can merge multiple children if they share the same add/edit/delete pattern
+- -03 (or -05): Child table(s) CRUD — can merge multiple children if they share the same add/edit/delete pattern
 
 ### Pattern 4: Spike First
 

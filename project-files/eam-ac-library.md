@@ -1,8 +1,9 @@
 # EAM AC Library — Wiki Sections, Validation Patterns & Mandatory ACs
 
-> **Version:** 1.4 | **Last Updated:** 2026-06-03
+> **Version:** 1.5 | **Last Updated:** 2026-06-18
 > **Load this file:** When writing ACs that reference EAM wiki sections, when drafting -01 or -02 mandatory ACs, or when you need the standard validation pair templates.
 > **What this file covers:** Full wiki anchor reference table (§1–§25), -01 mandatory AC templates, -02 standard validation pair templates, combined grid defaults AC, QA/Parity story structure, business rules phrasing guide.
+> **v1.5 changes (2026-06-18):** (1) **Audit History stories deferred** — Section 6 (Audit History Story Structure) is retained for reference but Audit History stories are no longer created per-screen; all Audit History will be handled as a batch later. (2) **"EAM" tag removed** — stories are no longer tagged with the standalone "EAM" tag; only `eam-phase-*` tags are applied.
 > **v1.4 changes (2026-06-03):** §24 Import from Excel is now mandatory on all input grid stories (previously PO-flagged only). Added New Record Creation (§6) as mandatory AC for input grid -01 stories. Updated Section 1 and Section 3 grid defaults AC templates to include Import bullet and §24 reference link. Omit §24 only for read-only grids. Grid defaults AC placement rule corrected: only in the story that introduces each grid (typically -01), not repeated in -02 or subsequent stories.
 > **v1.2 changes (2026-05-20):** Section 4 fully rewritten — (1) Classic screen retirement language removed throughout: no retirement bullet in Functional Scope, no retirement or sign-off language in the SME confirmation AC, no "Classic GUI is no longer required" framing anywhere in the template (originated from Asher Maddox, 2026-05-19). (2) QA story framing shifted from Classic parity comparison to web screen behavior verification: "behaves correctly across all functional dimensions", Classic GUI repositioned as an optional side-by-side reference not required for testing. (3) AC persona convention: all AC GWT blocks use "I" (first person); the SME confirmation AC is the only exception, referring to "a revenue accountant SME" as a distinct named role. (4) Standard SME confirmation AC template added as the mandatory closing AC for all QA/Parity stories.
 
@@ -486,11 +487,13 @@ Include `<h3>Business Rules</h3>` in the Description only when:
 - The screen has validation/guard conditions that constrain how data is entered
 - Users need to understand constraints before attempting to use the feature
 
-Do NOT include for Foundation+CRUD stories (-01), Notes, Audit History, or QA stories.
+Do NOT include for Foundation+CRUD stories (-01), Notes, or QA stories.
 
 ---
 
 ## Section 6: Audit History Story Structure
+
+> **⚠️ DEFERRED — Do not create Audit History stories per-screen.** As of 2026-06-18, Audit History stories are excluded from per-screen story creation. All Audit History screens will be worked on as a batch later. This section is retained as a reference for when that batch work begins. Skip this section during normal story authoring sessions.
 
 Every Audit History story follows this complete standard (established from JE005-04 #1804738 and refined from JE020-03 and JE025-03).
 

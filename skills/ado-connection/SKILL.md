@@ -50,7 +50,7 @@ authentication is working:
 
 ```
 azure-devops:wit_my_work_items
-  project: "QuorumSoftware"
+  project: "Quorum"
   top: 1
   type: "assignedtome"
 ```
@@ -74,7 +74,8 @@ If the verification call fails or returns an error:
 
 When calling any ADO tool, use these defaults unless the user specifies otherwise:
 
-- **Project**: `QuorumSoftware`
+- **Organization**: `QuorumSoftware`
+- **Project**: `Quorum` ← always use this; NEVER use `QuorumSoftware` for work items or stories
 - **Expand**: `all` (when using `wit_get_work_item`)
 - **Comments**: Always run `wit_list_work_item_comments` separately after retrieving a
   work item if the user needs the full discussion thread — comments are not included
@@ -86,5 +87,6 @@ When calling any ADO tool, use these defaults unless the user specifies otherwis
   first successful verification, you can make subsequent ADO calls without re-verifying.
 - If a later ADO call fails unexpectedly mid-conversation, re-run the verification step
   before retrying.
-- The user's org is **QuorumSoftware** — always use this as the default project/org
-  unless explicitly told otherwise.
+- The ADO **organization** is `QuorumSoftware`, but the **project** for all EAM work items
+  and stories is always `Quorum`. These are different things — never use `QuorumSoftware`
+  as the project parameter when creating or querying work items.

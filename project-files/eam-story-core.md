@@ -1,10 +1,11 @@
 # EAM Story Core — Templates & ADO Creation
 
-> **Version:** 1.1 | **Last Updated:** 2026-05-18
+> **Version:** 1.2 | **Last Updated:** 2026-07-07
 > **Load this file:** Before writing any story HTML in any session. This is the minimum file needed for all story work.
 > **What this file covers:** Description template, AC template, pre-creation validation gate, ADO defaults, two-step creation pattern, PO voice rules, tags, personas.
 > **For AC wiki patterns and validation pair templates:** See `eam-ac-library.md`.
 > **For decomposition and splitting rules:** See `eam-decomposition.md`.
+> **v1.2 changes (2026-07-07):** `System.AssignedTo` is now hardcoded to Asher Maddox (`asher.maddox@quorumsoftware.com`) for every newly created story, regardless of who is running the session. Previously assigned to the session creator.
 
 ---
 
@@ -47,7 +48,7 @@ Run this before every ADO write — full story map or single ad-hoc story. No ex
 | Work Item Type | `User Story` | Never use `Requirement` |
 | Area Path | `Quorum\North America\Upstream\myQ Accounting Modernization` | **Fetch from a live sibling story before every creation** — never trust a memorized value |
 | Iteration Path | **Do NOT set** | Defaults to root `Quorum`; sprint assignment is the Scrum Master's responsibility |
-| Assigned To | Session creator | Assign to the user running the session; do not hardcode |
+| Assigned To | `Asher Maddox <asher.maddox@quorumsoftware.com>` | **Hardcoded** — every newly created story is assigned to Asher Maddox regardless of who is running the session |
 
 ---
 
@@ -239,7 +240,7 @@ Record the returned ID for each story.
 
 Updates all fields not set in Step 1:
 - `Microsoft.VSTS.Common.AcceptanceCriteria` — AC HTML
-- `System.AssignedTo` — session creator in format `'Display Name <email@quorumsoftware.com>'`
+- `System.AssignedTo` — **always** `'Asher Maddox <asher.maddox@quorumsoftware.com>'`, regardless of who is running the session
 - `System.Tags` — correct `eam-phase-*` tag
 - `System.AreaPath` — value fetched from live sibling story (not memorized)
 
@@ -265,7 +266,7 @@ Chain runs from -01 (first) to -QA (last). Security satellite stories are **excl
 Confirm via `wit_get_work_item` with `expand: relations` for each story:
 - Parent Feature link correct — verify `System.LinkTypes.Hierarchy-Reverse` (name: "Parent") relation exists pointing to the correct Feature ID. A story with only Successor/Predecessor relations and no Parent relation has a missing parent link — fix before closing out.
 - `System.Tags` set correctly
-- `System.AssignedTo` set
+- `System.AssignedTo` is `Asher Maddox <asher.maddox@quorumsoftware.com>`
 - Successor chain intact on numbered stories
 - Log all ADO IDs
 

@@ -1,8 +1,9 @@
 # EAM AC Library — Wiki Sections, Validation Patterns & Mandatory ACs
 
-> **Version:** 1.5 | **Last Updated:** 2026-06-18
+> **Version:** 1.6 | **Last Updated:** 2026-07-08
 > **Load this file:** When writing ACs that reference EAM wiki sections, when drafting -01 or -02 mandatory ACs, or when you need the standard validation pair templates.
 > **What this file covers:** Full wiki anchor reference table (§1–§25), -01 mandatory AC templates, -02 standard validation pair templates, combined grid defaults AC, QA/Parity story structure, business rules phrasing guide.
+> **v1.6 changes (2026-07-08):** (1) **Desk ID no longer required** — new Section 2 sub-pattern (1a) for -02 stories: paired AC confirming Desk ID is not enforced as a required field on the web screen, when the field exists on the screen. (2) **Required field visual indicator** — new Section 2 sub-pattern (1b) for -02 stories: paired AC confirming required fields display a red asterisk and non-required fields (including Desk ID) do not. (3) **"Required fields highlighted" language retired** — the -01 New Record Creation (§6) AC template now says "required fields marked with a red asterisk" instead of "required fields highlighted", to stay consistent with the new 1b indicator AC in -02.
 > **v1.5 changes (2026-06-18):** (1) **Audit History stories deferred** — Section 6 (Audit History Story Structure) is retained for reference but Audit History stories are no longer created per-screen; all Audit History will be handled as a batch later. (2) **"EAM" tag removed** — stories are no longer tagged with the standalone "EAM" tag; only `eam-phase-*` tags are applied.
 > **v1.4 changes (2026-06-03):** §24 Import from Excel is now mandatory on all input grid stories (previously PO-flagged only). Added New Record Creation (§6) as mandatory AC for input grid -01 stories. Updated Section 1 and Section 3 grid defaults AC templates to include Import bullet and §24 reference link. Omit §24 only for read-only grids. Grid defaults AC placement rule corrected: only in the story that introduces each grid (typically -01), not repeated in -02 or subsequent stories.
 > **v1.2 changes (2026-05-20):** Section 4 fully rewritten — (1) Classic screen retirement language removed throughout: no retirement bullet in Functional Scope, no retirement or sign-off language in the SME confirmation AC, no "Classic GUI is no longer required" framing anywhere in the template (originated from Asher Maddox, 2026-05-19). (2) QA story framing shifted from Classic parity comparison to web screen behavior verification: "behaves correctly across all functional dimensions", Classic GUI repositioned as an optional side-by-side reference not required for testing. (3) AC persona convention: all AC GWT blocks use "I" (first person); the SME confirmation AC is the only exception, referring to "a revenue accountant SME" as a distinct named role. (4) Standard SME confirmation AC template added as the mandatory closing AC for all QA/Parity stories.
@@ -95,7 +96,7 @@ For input grids (inline-editable), include this AC to cover the empty editable r
   <li>When I initiate new record creation</li>
   <li>Then
     <ul>
-      <li>An empty editable row is available with required fields highlighted and ready for input</li>
+      <li>An empty editable row is available with required fields marked with a red asterisk and ready for input</li>
       <li>An Add Row button is available for inserting a new empty row</li>
     </ul>
   </li>
@@ -174,6 +175,49 @@ Each validation category requires BOTH a negative case (invalid input blocked) A
   <li>When I save</li>
   <li>Then the record is saved successfully and the grid refreshes showing the new record with all values intact</li>
 </ul>
+```
+
+### 1a. Desk ID No Longer Required
+
+When the screen includes a Desk ID field, confirm during Phase 1 analysis whether the source enforces it as required today. This migration removes that requirement — Desk ID becomes optional on the web screen. Call this out explicitly in the story's Functional Scope, not just in the ACs below.
+
+```html
+<p><strong>AC[N] — Desk ID is not a required field (negative):</strong></p>
+<ul>
+  <li>Given I attempt to save a record with all other required fields populated and Desk ID left empty</li>
+  <li>When I click Save</li>
+  <li>Then the record is saved successfully and no validation error is raised for Desk ID</li>
+</ul>
+<p>Reference: See <a href="https://dev.azure.com/QuorumSoftware/Quorum/_wiki/wikis/Quorum.wiki/11638/?wikiVersion=GBwikiMaster&amp;pagePath=/Quorum/North%20America/Upstream/myQ%20Modernization/EAM%252DScreen%252DMigration%252DFunctionality%252DReference&amp;pageId=11638&amp;anchor=8.-required-field-validation">Section 8 — Required Field Validation</a> in the EAM Functionality Reference Wiki.</p>
+
+<p><strong>AC[N+1] — Desk ID is accepted when provided (positive):</strong></p>
+<ul>
+  <li>Given I populate Desk ID along with all required fields</li>
+  <li>When I save the record</li>
+  <li>Then the record is saved successfully with the Desk ID value retained</li>
+</ul>
+```
+
+> **When to include:** Only on screens where a Desk ID field exists. Verify against source before assuming either way — some screens may not currently enforce it as required, in which case this pair still applies to confirm the (unchanged) non-required behavior on the web screen.
+
+### 1b. Required Field Visual Indicator
+
+Every -02 story for an input/CRUD screen must include this pair, tying the red-asterisk indicator to the same set of fields enforced by the Required Field Validation pair(s) above. If the required-field set changes later, revisit this pair too — it should never go stale relative to the actual enforced validations.
+
+```html
+<p><strong>AC[N] — Required fields are visually marked (positive):</strong></p>
+<ul>
+  <li>Given I am on the [Screen Name] screen</li>
+  <li>When the screen loads</li>
+  <li>Then every field enforced as required displays a red asterisk in the cell</li>
+</ul>
+<p><strong>AC[N+1] — Non-required fields have no asterisk (negative):</strong></p>
+<ul>
+  <li>Given I am on the [Screen Name] screen</li>
+  <li>When the screen loads</li>
+  <li>Then fields that are not enforced as required — including Desk ID — do not display a red asterisk</li>
+</ul>
+<p>Reference: See <a href="https://dev.azure.com/QuorumSoftware/Quorum/_wiki/wikis/Quorum.wiki/11638/?wikiVersion=GBwikiMaster&amp;pagePath=/Quorum/North%20America/Upstream/myQ%20Modernization/EAM%252DScreen%252DMigration%252DFunctionality%252DReference&amp;pageId=11638&amp;anchor=8.-required-field-validation">Section 8 — Required Field Validation</a> in the EAM Functionality Reference Wiki.</p>
 ```
 
 ### 2. Entity / Reference Existence Validation

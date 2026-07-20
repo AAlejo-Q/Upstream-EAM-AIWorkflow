@@ -66,11 +66,10 @@ EAM is migrating Quorum's **QRA (Revenue Accounting)** and **QDO (Division Order
 | Test Coverage | 1786995 | QA/automation | Q4 2027 |
 | Batch Modernization | 1786996 | Batch processes | Q4 2027 |
 
-**Active Features for screen stories:** 1786972 (DRI), 1792329, 1786978 (JE)
+**Active Features for screen stories:** 1810114 (VL031 Direct Revenue Input),	1810115 (VL025 DRI Link Maintenance),	1810116 (ML006 SOD DRI Links),	1810117 (JE005 JE Group Type Maintenance),	1810118 (JE010 Account Setup Maintenance),	1810119 (JE011 Account/Subledger Xref),	1810120 (JE015 Account Group),	1810121 (JE020 Account/Account Group Xref),	1810122 (JE025 Account Group Template),	1810123 (JE030 Subledger Maintenance),	1813142 (VL006 DOI Accounting Rules),	1813143 (TX020 State Tax Rate Query),	1813144 (TX021 State Tax Rate Maintenance),	1813145 (VL005 DOI Accounting Data Query),	1813141 (VL100 Revenue Selection/Submittal),	1813148 (VL032 VL Direct Revenue Input Upload (Redesign VL031)),	1813149 (JE100 JE Post Selection/Submittal),	1813150 (JE102 Accounting Month Roll Date),	1813146 (PN020 PPN Creation),	1813151 (RD010 Reversal DOI Deletion),	1813147 (PN025 PPN Query),	1813152 (RD030 RD Pre Tracking Results),	1813153 (RD031 RD Post Tracking Results),	1813154 (VL050 VL Full Revenue Results),	1813167 (JE205/JE206/JE207/JE210 Manual JE Workflow),	1812407 (CW010 State Withholding Tax Maintenance),	1833359 (JE305 HIST Reversal Batch Selection),	1813155 (CW011 State Backup Withholding Tax Maintenance),	1833360 (JE310 HIST Reversal Batch Execution),	1813156 (CW015 Non-Resident Alien Withholding Tax Maintenance),	1833361 (JE315 MTD Reversal Batch Selection),	1813157 (EC005 Escheat Maintenance/History),	1833362 (JE320 MTD Reversal Batch Execution),	1813158 (EC010 Escheat Processing Rules),	1839726 (EC006 Escheat Owner Detail),	1813160 (TR010 Lease Master Data - ONRR Royalty Reporting),	1813161 (TS005 Severance Tax Common Query),	1813162 (TS006 Severance Tax Common Maintenance),	1813163 (DO004 DOI Header Query),	1813164 (DO005 DOI Query),	1813165 (MG004 Market Group Header Query),	1813166 (MG005 Market Group Query),	1786975 (Division of Interest),	1813168 (RC005 Contract Maintenance),	1813169 (RC036 Price Terms Maintenance),	1813170 (STG1 Stage Table Data Maintenance),	1813171 (VA005 Gas Volumes),	1813172 (VA015 Liquid Volumes),	1813173 (GB015 Gas Balancing Manual Input),	1813174 (VA035 VA Results)
 **Satellite Feature — Security (all screens):** 1786977
-**Foundation dependency Features:** 1786989 (Web Framework), 1786990 (Data Access), 1786983 (Metadata)
 
-**Completed screen sets:** VL031, VL025, ML006, JE100, JE102, JE005
+**Completed screen sets:** ML006, JE005, JE010, JE102, RD031, 
 
 ---
 

@@ -1,6 +1,6 @@
 # EAM Project Instructions
 
-> **Version:** 1.1 | **Last Updated:** 2026-05-21
+> **Version:** 1.2 | **Last Updated:** 2026-07-20
 > **Load this file:** Once per session, before any EAM work begins.
 > **What this file covers:** Who, what, where, and why — static project context. Process and templates live in other files.
 
@@ -66,10 +66,64 @@ EAM is migrating Quorum's **QRA (Revenue Accounting)** and **QDO (Division Order
 | Test Coverage | 1786995 | QA/automation | Q4 2027 |
 | Batch Modernization | 1786996 | Batch processes | Q4 2027 |
 
-**Active Features for screen stories:** 1810114 (VL031 Direct Revenue Input),	1810115 (VL025 DRI Link Maintenance),	1810116 (ML006 SOD DRI Links),	1810117 (JE005 JE Group Type Maintenance),	1810118 (JE010 Account Setup Maintenance),	1810119 (JE011 Account/Subledger Xref),	1810120 (JE015 Account Group),	1810121 (JE020 Account/Account Group Xref),	1810122 (JE025 Account Group Template),	1810123 (JE030 Subledger Maintenance),	1813142 (VL006 DOI Accounting Rules),	1813143 (TX020 State Tax Rate Query),	1813144 (TX021 State Tax Rate Maintenance),	1813145 (VL005 DOI Accounting Data Query),	1813141 (VL100 Revenue Selection/Submittal),	1813148 (VL032 VL Direct Revenue Input Upload (Redesign VL031)),	1813149 (JE100 JE Post Selection/Submittal),	1813150 (JE102 Accounting Month Roll Date),	1813146 (PN020 PPN Creation),	1813151 (RD010 Reversal DOI Deletion),	1813147 (PN025 PPN Query),	1813152 (RD030 RD Pre Tracking Results),	1813153 (RD031 RD Post Tracking Results),	1813154 (VL050 VL Full Revenue Results),	1813167 (JE205/JE206/JE207/JE210 Manual JE Workflow),	1812407 (CW010 State Withholding Tax Maintenance),	1833359 (JE305 HIST Reversal Batch Selection),	1813155 (CW011 State Backup Withholding Tax Maintenance),	1833360 (JE310 HIST Reversal Batch Execution),	1813156 (CW015 Non-Resident Alien Withholding Tax Maintenance),	1833361 (JE315 MTD Reversal Batch Selection),	1813157 (EC005 Escheat Maintenance/History),	1833362 (JE320 MTD Reversal Batch Execution),	1813158 (EC010 Escheat Processing Rules),	1839726 (EC006 Escheat Owner Detail),	1813160 (TR010 Lease Master Data - ONRR Royalty Reporting),	1813161 (TS005 Severance Tax Common Query),	1813162 (TS006 Severance Tax Common Maintenance),	1813163 (DO004 DOI Header Query),	1813164 (DO005 DOI Query),	1813165 (MG004 Market Group Header Query),	1813166 (MG005 Market Group Query),	1786975 (Division of Interest),	1813168 (RC005 Contract Maintenance),	1813169 (RC036 Price Terms Maintenance),	1813170 (STG1 Stage Table Data Maintenance),	1813171 (VA005 Gas Volumes),	1813172 (VA015 Liquid Volumes),	1813173 (GB015 Gas Balancing Manual Input),	1813174 (VA035 VA Results)
 **Satellite Feature — Security (all screens):** 1786977
 
-**Completed screen sets:** ML006, JE005, JE010, JE102, RD031, 
+### Screen Feature ID Reference
+
+Sorted by module. Use Feature ID as the parent when creating stories. Status `✅ Complete` means all stories have been created and the screen set is done.
+
+| Feature ID | Module | Screen ID | Screen Name | Status |
+|---|---|---|---|---|
+| 1786975 | DOI | — | Division of Interest | Active |
+| 1812407 | CW | CW010 | State Withholding Tax Maintenance | Active |
+| 1813155 | CW | CW011 | State Backup Withholding Tax Maintenance | Active |
+| 1813156 | CW | CW015 | Non-Resident Alien Withholding Tax Maintenance | Active |
+| 1813163 | DO | DO004 | DOI Header Query | Active |
+| 1813164 | DO | DO005 | DOI Query | Active |
+| 1813157 | EC | EC005 | Escheat Maintenance/History | Active |
+| 1839726 | EC | EC006 | Escheat Owner Detail | Active |
+| 1813158 | EC | EC010 | Escheat Processing Rules | Active |
+| 1813173 | GB | GB015 | Gas Balancing Manual Input | Active |
+| 1810117 | JE | JE005 | JE Group Type Maintenance | ✅ Complete |
+| 1810118 | JE | JE010 | Account Setup Maintenance | ✅ Complete |
+| 1810119 | JE | JE011 | Account/Subledger Xref | Active |
+| 1810120 | JE | JE015 | Account Group | Active |
+| 1810121 | JE | JE020 | Account/Account Group Xref | Active |
+| 1810122 | JE | JE025 | Account Group Template | Active |
+| 1810123 | JE | JE030 | Subledger Maintenance | Active |
+| 1813149 | JE | JE100 | JE Post Selection/Submittal | Active |
+| 1813150 | JE | JE102 | Accounting Month Roll Date | ✅ Complete |
+| 1813167 | JE | JE205–JE210 | Manual JE Workflow | Active |
+| 1833359 | JE | JE305 | HIST Reversal Batch Selection | Active |
+| 1833360 | JE | JE310 | HIST Reversal Batch Execution | Active |
+| 1833361 | JE | JE315 | MTD Reversal Batch Selection | Active |
+| 1833362 | JE | JE320 | MTD Reversal Batch Execution | Active |
+| 1813165 | MG | MG004 | Market Group Header Query | Active |
+| 1813166 | MG | MG005 | Market Group Query | Active |
+| 1810116 | ML | ML006 | SOD DRI Links | ✅ Complete |
+| 1813146 | PN | PN020 | PPN Creation | Active |
+| 1813147 | PN | PN025 | PPN Query | Active |
+| 1813168 | RC | RC005 | Contract Maintenance | Active |
+| 1813169 | RC | RC036 | Price Terms Maintenance | Active |
+| 1813151 | RD | RD010 | Reversal DOI Deletion | Active |
+| 1813152 | RD | RD030 | RD Pre Tracking Results | Active |
+| 1813153 | RD | RD031 | RD Post Tracking Results | ✅ Complete |
+| 1813170 | STG | STG1 | Stage Table Data Maintenance | Active |
+| 1813160 | TR | TR010 | Lease Master Data — ONRR Royalty Reporting | Active |
+| 1813161 | TS | TS005 | Severance Tax Common Query | Active |
+| 1813162 | TS | TS006 | Severance Tax Common Maintenance | Active |
+| 1813143 | TX | TX020 | State Tax Rate Query | Active |
+| 1813144 | TX | TX021 | State Tax Rate Maintenance | Active |
+| 1813171 | VA | VA005 | Gas Volumes | Active |
+| 1813172 | VA | VA015 | Liquid Volumes | Active |
+| 1813174 | VA | VA035 | VA Results | Active |
+| 1813145 | VL | VL005 | DOI Accounting Data Query | Active |
+| 1813142 | VL | VL006 | DOI Accounting Rules | Active |
+| 1810115 | VL | VL025 | DRI Link Maintenance | Active |
+| 1810114 | VL | VL031 | Direct Revenue Input | Active |
+| 1813148 | VL | VL032 | VL Direct Revenue Input Upload (Redesign VL031) | Active |
+| 1813154 | VL | VL050 | VL Full Revenue Results | Active |
+| 1813141 | VL | VL100 | Revenue Selection/Submittal | Active |
 
 ---
 

@@ -224,7 +224,7 @@ When uncertainty is high (file upload, batch integration, novel UI pattern):
 
 | Pattern | Risk | Notes |
 |---|---|---|
-| File upload/parsing (e.g., VL032 merge into VL031) | 🔴 | Blazor Server streaming, column mapping |
+| File upload/parsing (e.g., VL032 upload) | 🔴 | Blazor Server streaming, column mapping |
 | Mass Changes dialogs (e.g., VL025 Mass End Date) | 🔴 | Three modes, field override logic |
 | Revenue Selection/Submittal (VL100) | 🔴 | 6 tabs, 8 DB views, 4 staging tables, batch integration |
 | Cascade delete with guard conditions | 🔴 | Cross-table integrity, user confirmation dialogs |

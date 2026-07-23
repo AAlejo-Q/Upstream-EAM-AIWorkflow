@@ -34,8 +34,8 @@ and ADO Feature descriptions under Epic 1786991.
 | Code | Name | Priority | Source | POC Status | Gaps | Design Approach |
 |------|------|----------|--------|------------|------|-----------------|
 | VL025 | DRI Link Maintenance | P1 | Classic | ~75-80% | 22 (8C/10M/4L) | Lift and Shift |
-| VL031 | VL Direct Revenue Input | P1 | Classic | ~85% | 12 (7C/5M) | Redesign to incorporate VL032 |
-| VL032 | VL Direct Revenue Input Upload | P3 | Classic | ~75% | 18 (11C/7M) | Combine with VL031 |
+| VL031 | VL Direct Revenue Input | P1 | Classic | ~85% | 12 (7C/5M) | Lift and Shift |
+| VL032 | VL Direct Revenue Input Upload | P3 | Classic | ~75% | 18 (11C/7M) | Lift and Shift |
 | VL100 | Revenue Selection/Submittal | P1 | Classic | **~15% prototype** | 47+ (majority CRIT) | Redesign |
 
 ### Revenue Distribution (Feature 1786980)
@@ -144,8 +144,8 @@ and ADO Feature descriptions under Epic 1786991.
 | Approach | Count | Description |
 |----------|-------|-------------|
 | Lift and Shift | ~55 | Direct migration preserving existing UX |
-| Redesign | ~8 | Significant UX improvement (MJE combo, VL031+032) |
-| Combine | ~6 | Merge related screens into unified workflow |
+| Redesign | ~8 | Significant UX improvement (MJE combo) |
+| Combine | ~5 | Merge related screens into unified workflow (VL005 and VL006, TS005 and TS006) |
 | Use Existing Web | ~12 | Leverage already-built MyQuorum Web screens |
 
 ---

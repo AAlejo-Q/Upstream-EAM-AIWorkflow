@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAM Workflow v2.0 — Process Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e1015;
+  --surface: #161921;
+  --surface-2: #1c2029;
+  --surface-3: #22262f;
+  --border: #282d3a;
+  --border-hi: #3a4055;
+  --text: #e0e3ea;
+  --text-dim: #8890a4;
+  --text-muted: #555b6e;
+  --blue: #5b8def;
+  --blue-bg: rgba(91,141,239,.08);
+  --blue-border: rgba(91,141,239,.25);
+  --green: #34d399;
+  --green-bg: rgba(52,211,153,.08);
+  --green-border: rgba(52,211,153,.25);
+  --amber: #f59e0b;
+  --amber-bg: rgba(245,158,11,.08);
+  --amber-border: rgba(245,158,11,.25);
+  --rose: #f472b6;
+  --rose-bg: rgba(244,114,182,.08);
+  --rose-border: rgba(244,114,182,.25);
+  --cyan: #22d3ee;
+  --cyan-bg: rgba(34,211,238,.08);
+  --cyan-border: rgba(34,211,238,.25);
+  --purple: #a78bfa;
+  --purple-bg: rgba(167,139,250,.08);
+  --purple-border: rgba(167,139,250,.25);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+code{font-family:'JetBrains Mono',monospace;font-size:.85em;background:var(--surface-3);padding:1px 5px;border-radius:3px}
+
+/* Header */
+.hdr{padding:48px 0 28px;border-bottom:1px solid var(--border)}
+.hdr-eye{font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:2.2px;color:var(--blue);margin-bottom:10px}
+.hdr h1{font-size:30px;font-weight:700;letter-spacing:-.4px;margin-bottom:6px}
+.hdr p{color:var(--text-dim);font-size:14px;max-width:680px}
+.hdr-meta{display:flex;gap:22px;margin-top:16px;font-size:12px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;flex-wrap:wrap}
+
+/* Tabs */
+.tabs{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border)}
+.tabs-row{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.tabs-row::-webkit-scrollbar{display:none}
+.tbtn{background:none;border:none;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:13px 18px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:.15s}
+.tbtn:hover{color:var(--text-dim)}
+.tbtn.on{color:var(--blue);border-bottom-color:var(--blue)}
+
+/* Sections */
+.sec{display:none;padding:36px 0 56px;animation:fi .2s ease}
+.sec.on{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sec-t{font-size:21px;font-weight:700;margin-bottom:4px}
+.sec-d{color:var(--text-dim);font-size:13.5px;margin-bottom:28px;max-width:660px}
+
+/* ══ FLOWCHART ══ */
+.fc{position:relative;padding:8px 0 0}
+.fc::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--border);transform:translateX(-.5px);z-index:0}
+
+.ph-label{position:relative;z-index:1;width:fit-content;margin:0 auto;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:600;padding:5px 16px;border-radius:20px;text-align:center}
+.ph-label.blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+.ph-label.green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.ph-label.cyan{background:var(--cyan-bg);color:var(--cyan);border:1px solid var(--cyan-border)}
+.ph-label.amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+.ph-label.rose{background:var(--rose-bg);color:var(--rose);border:1px solid var(--rose-border)}
+.ph-label.purple{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border)}
+
+.node{position:relative;z-index:1;max-width:520px;margin:14px auto;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px;transition:border-color .15s}
+.node:hover{border-color:var(--border-hi)}
+.node h4{font-size:13.5px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.node p{font-size:12.5px;color:var(--text-dim);line-height:1.5}
+.node-id{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);flex-shrink:0}
+
+.diamond{position:relative;z-index:1;width:fit-content;max-width:420px;margin:14px auto;background:var(--surface-2);border:1px dashed var(--amber-border);border-radius:8px;padding:12px 18px;text-align:center}
+.diamond h4{font-size:12.5px;font-weight:600;color:var(--amber)}
+.diamond p{font-size:11.5px;color:var(--text-dim)}
+.diamond::before{content:'◇';position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:14px;color:var(--amber);background:var(--bg);padding:0 6px}
+
+.gate{position:relative;z-index:1;max-width:520px;margin:14px auto;background:var(--surface);border:1px solid var(--amber-border);border-left:3px solid var(--amber);border-radius:8px;padding:12px 18px}
+.gate h4{font-size:13px;font-weight:600;color:var(--amber);display:flex;align-items:center;gap:8px}
+.gate p{font-size:12.5px;color:var(--text-dim)}
+
+.arr{position:relative;z-index:1;height:18px;display:flex;align-items:center;justify-content:center}
+.arr::after{content:'▾';color:var(--text-muted);font-size:12px}
+.arr-lg{height:28px}
+
+.branch{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:640px;margin:14px auto}
+.branch-path{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 16px;text-align:center}
+.branch-path h5{font-size:11.5px;font-weight:600;margin-bottom:2px}
+.branch-path p{font-size:11.5px;color:var(--text-dim)}
+.branch-path.yes{border-color:var(--green-border)}
+.branch-path.yes h5{color:var(--green)}
+.branch-path.no{border-color:var(--rose-border)}
+.branch-path.no h5{color:var(--rose)}
+
+.merge{position:relative;z-index:1;width:fit-content;margin:10px auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);background:var(--bg);padding:0 10px}
+
+.fb-return{position:relative;z-index:1;max-width:520px;margin:14px auto;border:1px dashed var(--purple-border);border-radius:8px;padding:12px 18px;background:var(--purple-bg)}
+.fb-return h4{font-size:13px;font-weight:600;color:var(--purple);display:flex;align-items:center;gap:8px}
+.fb-return p{font-size:12.5px;color:var(--text-dim)}
+
+.badge-new{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:1px;padding:1px 7px;border-radius:3px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);vertical-align:middle}
+.badge-chg{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:1px;padding:1px 7px;border-radius:3px;background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);vertical-align:middle}
+
+/* ══ SOURCE TAGS ══ */
+.src{font-family:'JetBrains Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.8px;padding:2px 8px;border-radius:3px;white-space:nowrap;display:inline-block}
+.src-p{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
+.src-d{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border)}
+.src-m{background:var(--cyan-bg);color:var(--cyan);border:1px solid var(--cyan-border)}
+.legend{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-dim)}
+
+/* ══ TABLES ══ */
+.grp{margin-bottom:32px}
+.grp h3{font-size:15px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.grp h3 .ct{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted);background:var(--surface-2);padding:2px 8px;border-radius:4px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:10.5px;font-weight:500;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);padding:9px 14px;border-bottom:1px solid var(--border);background:var(--surface)}
+td{padding:11px 14px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface)}
+.nm{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--blue);white-space:nowrap}
+.ds{color:var(--text-dim);font-size:12.5px;line-height:1.5}
+.st{font-size:11.5px;white-space:nowrap}
+
+/* Gap cards */
+.gap-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:28px}
+.gc{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px}
+.gc-id{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--rose);margin-bottom:3px}
+.gc h4{font-size:13.5px;font-weight:600;margin-bottom:4px}
+.gc p{font-size:12.5px;color:var(--text-dim);line-height:1.45}
+.gc-fix{margin-top:8px;font-size:11.5px;color:var(--green);font-weight:500}
+
+/* Tier grid */
+.tier-row{display:grid;grid-template-columns:60px 1fr 1fr 1fr;gap:1px;background:var(--border);border-radius:8px;overflow:hidden;margin-top:12px}
+.tier-cell{background:var(--surface);padding:10px 14px;font-size:12.5px}
+.tier-cell.hdr{background:var(--surface-2);font-size:10.5px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted)}
+.tier-cell .num{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:13px}
+
+@media(max-width:768px){
+  .hdr h1{font-size:22px}
+  .branch{grid-template-columns:1fr;max-width:380px}
+  .node,.gate,.diamond,.fb-return{max-width:92vw}
+  .tier-row{grid-template-columns:1fr;gap:8px;background:transparent}
+  .tier-cell{border-radius:6px;border:1px solid var(--border)}
+}
+@media print{
+  .tabs{position:static}
+  .sec{display:block!important;page-break-before:always}
+  .sec:first-of-type{page-break-before:avoid}
+  body{background:#fff;color:#111}
+  .node,.gate,.diamond{border-color:#ccc}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hdr">
+  <div class="hdr-eye">EAM · Products Team · Workflow Restructuring</div>
+  <h1>Story Authoring Workflow v2.0</h1>
+  <p>Restructured to consume dev team analysis before independent work, classify validations by tier, and close the feedback loop on story–spec gaps.</p>
+  <div class="hdr-meta">
+    <span>📅 2026-06-03</span>
+    <span>👤 Aaron Alejo · Asher Maddox</span>
+    <span>📂 AAlejo-Q/Upstream-EAM-AIWorkflow</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="wrap tabs-row">
+    <button class="tbtn on" data-t="flow">Process Flowchart</button>
+    <button class="tbtn" data-t="gaps">Gaps Addressed</button>
+    <button class="tbtn" data-t="inv">Skills &amp; Context Files</button>
+    <button class="tbtn" data-t="dev">Dev Team Assets</button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════ -->
+<!-- FLOWCHART                                -->
+<!-- ════════════════════════════════════════ -->
+<div id="flow" class="sec on">
+<div class="wrap">
+<h2 class="sec-t">Process Flowchart</h2>
+<p class="sec-d">Read top-to-bottom. Diamonds are decisions, amber-bordered bars are approval gates, dashed purple box is the feedback return loop. <span class="badge-chg">changed</span> = modified from v1.1. <span class="badge-new">new</span> = added in v2.0.</p>
+
+<div class="fc">
+
+<!-- PHASE 1 -->
+<div class="ph-label blue">Phase 1 — Analysis</div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">1.1</span> Identify Screen</h4>
+<p>Confirm screen ID, parent Feature ID, migration pattern (Lift &amp; Shift / Redesign / Combine).</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">1.2</span> Review Existing Context</h4>
+<p>Load <code>eam-project-instructions.md</code>, <code>Effort-Priority-Matrix.md</code> (authoritative), ADO parent Feature.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">1.3</span> Check Dev Team Artifacts <span class="badge-new">new</span></h4>
+<p>Query <code>Quorum-Enterprise/Quorum.Upstream.AITools</code> repo for: Analysis files (5 docs), Screen-Spec, ADO Story Analysis gap report.</p></div>
+<div class="arr"></div>
+
+<div class="diamond"><h4>Dev artifacts found?</h4><p>Analysis + Screen-Spec present for this screen?</p></div>
+<div class="arr"></div>
+
+<div class="branch">
+  <div class="branch-path yes"><h5>✓ Yes — Fast Path</h5><p>Consume analysis + spec as baseline. Skip independent source reads. Go to 1.5.</p></div>
+  <div class="branch-path no"><h5>✗ No — Full Analysis</h5><p>Read full <code>QFrm{ID}.cs</code>, all BR method bodies, two-sided verification. Go to 1.5.</p></div>
+</div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">1.4</span> Source Analysis <span style="font-weight:400;color:var(--text-muted)">(if needed)</span></h4>
+<p>Full or targeted — InitializeBusinessRules, InitializeData, InitializeControlState, context methods. Two-sided contract verification for navigation, audit, delete rules.</p></div>
+<div class="arr"></div>
+
+<div class="merge">↓ both paths converge</div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">1.5</span> Metadata Queries <span class="badge-new">new</span></h4>
+<p>Always run via <code>quorum-metadata-dev</code> MCP: grid config (<code>QARCH_CNFG_GRIDCTRL_NET</code>), grid columns (<code>QARCH_CNFG_GRIDCTRL_COL_NET</code>), code tables, pick lists, SQL key inventory.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">1.6</span> Classify Rules by Tier <span class="badge-new">new</span></h4>
+<p>Assign every BR to Tier 1 (in-memory), 2 (DB-lookup), 3 (commit-time), or 4 (side-effects). Tier 4 → routed to special stories, excluded from -02. Resolve <code>RES_MSG_*</code> strings to canonical English.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">1.7</span> Uncertainty &amp; Escalation</h4>
+<p>Admit unknowns explicitly. Exhaust broader search, base class check, dev team Open Questions before marking as SME question.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">1.8</span> Translate to PO Voice</h4>
+<p>Convert to business language. Include tier classification, canonical error text, artifact source references.</p></div>
+
+<div class="arr arr-lg"></div>
+
+<!-- PHASE 2 -->
+<div class="ph-label green">Phase 2 — Planning</div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">2.1</span> Select Decomposition <span class="badge-chg">changed</span></h4>
+<p>Map to Universal Story Sequence. Show dev artifacts consumed, tier counts (T1/T2/T3), Tier 4 rules → special stories.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">2.2</span> Evidence Check</h4>
+<p>Every story beyond -01/-02 must trace to a confirmed Phase 1 artifact. Unconfirmed → Open SME Question.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">2.3</span> Present Plan &amp; Risks</h4>
+<p>Story map, tier distribution, gap report contradictions, dependencies, complex BRs, cross-screen impacts.</p></div>
+<div class="arr"></div>
+
+<div class="gate"><h4>⛔ Gate — Await PO/BA Approval</h4><p>Do not proceed to story generation until explicit approval.</p></div>
+
+<div class="arr arr-lg"></div>
+
+<!-- PHASE 3 -->
+<div class="ph-label cyan">Phase 3 — Story Generation</div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">3.1</span> Load Templates</h4>
+<p>Read <code>eam-story-core.md</code> (mandatory) and <code>eam-ac-library.md</code> before writing any HTML.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">3.2</span> Draft Stories <span class="badge-chg">changed</span></h4>
+<p><strong>-01:</strong> Foundation/CRUD — §16 nav, §1+§4 query, §26 record view, §3+§21-§25 pagination.<br>
+<strong>-02:</strong> Validations — <code>&lt;!-- Tier N --&gt;</code> annotations + canonical <code>RES_MSG_*</code> error text. Tier 4 excluded.<br>
+<strong>-03+:</strong> Special — Tier 4 rules, Notes, batch, navigation.<br>
+<strong>-QA:</strong> Testing. <strong>Security:</strong> Satellite → Feature 1786977.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">3.3</span> PO Voice Scan</h4>
+<p>Strip class/table/procedure/method names. Replace with observable business outcomes.</p></div>
+
+<div class="arr arr-lg"></div>
+
+<!-- PHASE 4 -->
+<div class="ph-label green">Phase 4 — Review &amp; Refinement</div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">4.1</span> Display, Explain, Iterate</h4>
+<p>Present full story map. Explain consolidation. Flag caveats. Iterate on feedback.</p></div>
+
+<div class="arr arr-lg"></div>
+
+<!-- PHASE 4.5 -->
+<div class="ph-label amber">Phase 4.5 — Pre-Creation Validation Gate</div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">4.5a</span> Critical 5 Checks</h4>
+<p>① <code>&lt;h2&gt;User Story&lt;/h2&gt;</code> + "As a..." ② No security in numbered stories ③ Area path from live sibling ④ No SP in HTML ⑤ §21-§25 AC on grid stories</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">4.5b</span> Full Validation Checklist</h4>
+<p>Template structure, Given/When/Then, paired +/- ACs, tags, parent Feature, tier annotations, Tier 4 exclusion.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">4.5c</span> Screen-Spec Alignment <span class="badge-new">new</span></h4>
+<p>Cross-check stories against Screen-Spec sections: business rules, special behaviors, grid layout, Notes, navigation. Log and fix gaps.</p></div>
+<div class="arr"></div>
+
+<div class="diamond"><h4>All checks pass?</h4><p>Critical 5 + checklist + spec alignment</p></div>
+<div class="arr"></div>
+
+<div class="branch">
+  <div class="branch-path no"><h5>✗ Fail</h5><p>Fix violations. Return to 4.5a. No known failures proceed.</p></div>
+  <div class="branch-path yes"><h5>✓ Pass</h5><p>All checks satisfied → Phase 5.</p></div>
+</div>
+
+<div class="arr arr-lg"></div>
+
+<!-- PHASE 5 -->
+<div class="ph-label rose">Phase 5 — ADO Creation</div>
+<div class="arr"></div>
+
+<div class="gate"><h4>⛔ Gate — Explicit Approval Required</h4><p>"Confirmed", "go ahead", "create them", "approved". Silence ≠ approval.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">5.1</span> Create with Parent Link</h4>
+<p><code>wit_add_child_work_items</code> — title + description + parent. Numbered → functional Feature. Security → 1786977.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">5.2</span> Batch Update Fields</h4>
+<p>ACs, tags (<code>eam-phase-*</code>), AssignedTo. No SP. No Iteration Path.</p></div>
+<div class="arr"></div>
+
+<div class="node"><h4><span class="node-id">5.3</span> Successor Links &amp; Verify</h4>
+<p>Chain: -01 → -02 → … → -QA. Security excluded. Confirm parent, chain, tags. Log IDs.</p></div>
+
+<div class="arr arr-lg"></div>
+
+<!-- FEEDBACK -->
+<div class="ph-label purple">Feedback Loop</div>
+<div class="arr"></div>
+
+<div class="fb-return">
+  <h4>↩ Gap Report Consumption <span class="badge-new">new</span></h4>
+  <p>When dev team runs <code>Analyze-ado-stories</code>: read gap report → classify each finding as <strong>contradiction</strong> (blocks their pipeline), <strong>spec-only</strong> (may need story), <strong>story-only</strong> (may be over-specifying), or <strong>open question</strong> → draft amendment plan → await approval → update ADO.</p>
+</div>
+<div class="arr"></div>
+<div class="merge" style="color:var(--purple)">↩ returns to Phase 4 for amendments</div>
+
+</div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- GAPS ADDRESSED                           -->
+<!-- ════════════════════════════════════════ -->
+<div id="gaps" class="sec">
+<div class="wrap">
+<h2 class="sec-t">Gaps Addressed</h2>
+<p class="sec-d">Four cross-functional alignment gaps identified between Products and Dev. Each maps to specific v2.0 changes.</p>
+<div class="gap-row">
+  <div class="gc"><div class="gc-id">Gap 1</div><h4>Duplicate Analysis</h4><p>Both teams independently analyze the same screens. Dev queries 7+ metadata tables, runs 14+ code searches, produces 5 structured docs.</p><div class="gc-fix">→ Phase 1.3 + Phase 1.5</div></div>
+  <div class="gc"><div class="gc-id">Gap 2</div><h4>Parallel Artifacts</h4><p>Screen-Spec and ADO stories are independently authored with different structure and detail level.</p><div class="gc-fix">→ Phase 4.5c (spec alignment)</div></div>
+  <div class="gc"><div class="gc-id">Gap 3</div><h4>One-Way Feedback</h4><p>Dev's gap report never returns to Products. Contradictions block their Audit gate but we never see them.</p><div class="gc-fix">→ Feedback Loop</div></div>
+  <div class="gc"><div class="gc-id">Gap 4</div><h4>Tier Misalignment</h4><p>Dev classifies rules into 4 tiers. Our stories don't. Dev's Claude re-derives — sometimes incorrectly.</p><div class="gc-fix">→ Phase 1.6 + Phase 3.2</div></div>
+</div>
+
+<h3 style="margin-bottom:8px">Dev Team's 4-Tier Validation System</h3>
+<p class="sec-d" style="margin-bottom:14px">Now embedded in our workflow — classify during analysis (1.6), annotate in ACs (3.2).</p>
+<div class="tier-row">
+  <div class="tier-cell hdr">Tier</div><div class="tier-cell hdr">Type</div><div class="tier-cell hdr">Dev Policy</div><div class="tier-cell hdr">Our Handling</div>
+  <div class="tier-cell"><span class="num">1</span></div><div class="tier-cell ds">Pure in-memory — DO property checks</div><div class="tier-cell ds">✅ Fully implemented</div><div class="tier-cell ds">-02 AC + <code>&lt;!-- Tier 1 --&gt;</code></div>
+  <div class="tier-cell"><span class="num">2</span></div><div class="tier-cell ds">DB-lookup — reads another table</div><div class="tier-cell ds">✅ Batch-lookup pattern</div><div class="tier-cell ds">-02 AC + <code>&lt;!-- Tier 2 --&gt;</code> + entity</div>
+  <div class="tier-cell"><span class="num">3</span></div><div class="tier-cell ds">Commit-time — across all rows in batch</div><div class="tier-cell ds">✅ Fully implemented</div><div class="tier-cell ds">-02 AC + <code>&lt;!-- Tier 3 --&gt;</code></div>
+  <div class="tier-cell"><span class="num">4</span></div><div class="tier-cell ds">Side-effects — dialogs, PPN writes, auto-populate</div><div class="tier-cell ds">🟡 Stubbed</div><div class="tier-cell ds"><strong>Excluded from -02</strong> → special</div>
+</div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- SKILLS & CONTEXT                         -->
+<!-- ════════════════════════════════════════ -->
+<div id="inv" class="sec">
+<div class="wrap">
+<h2 class="sec-t">Skills &amp; Context Files</h2>
+<p class="sec-d">Complete inventory with source indicators showing which repo or connection each item comes from.</p>
+
+<div class="legend">
+  <div class="legend-item"><span class="src src-p">Products</span> AAlejo-Q/Upstream-EAM-AIWorkflow</div>
+  <div class="legend-item"><span class="src src-d">Dev Team</span> Quorum-Enterprise/Quorum.Upstream.AITools</div>
+  <div class="legend-item"><span class="src src-m">MCP</span> Live metadata / ADO connection</div>
+</div>
+
+<div class="grp">
+<h3>Products Team Skills <span class="ct">9</span></h3>
+<table><thead><tr><th>Source</th><th>Skill</th><th>Description</th><th>Phase</th></tr></thead><tbody>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">eam-user-story-template</td><td class="ds">Core story authoring — v6.1 standard. The primary skill this workflow orchestrates.</td><td class="st">2–5</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">upstream-codebase-guide</td><td class="ds">Technical reference: QRA/QDO/QCA/QCFS + shared infrastructure. Screen-to-code mappings.</td><td class="st">1</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">safe-popm-best-practices</td><td class="ds">SAFe PO/PM — Features, Stories, WSJF, ACs, benefit hypotheses.</td><td class="st">2–4</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">ado-connection</td><td class="ds">ADO MCP bootstrap — auth, org/project resolution.</td><td class="st">5</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">github-access</td><td class="ds">GitHub MCP bootstrap — Products + Quorum-Enterprise repos.</td><td class="st">1</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">skill-learnings</td><td class="ds">Continuous learning — captures session improvements, promotes patterns.</td><td class="st">Close</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">release-notes-export</td><td class="ds">Excel release notes from ADO. Patch labels, product sheets.</td><td class="st">On demand</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">triage-low-medium-bugs</td><td class="ds">Bug triage — credibility, value, capacity, relevance.</td><td class="st">On demand</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">batch-process-qa-review</td><td class="ds">Batch process analysis, ADO bug search, test scenarios.</td><td class="st">On demand</td></tr>
+</tbody></table>
+</div>
+
+<div class="grp">
+<h3>Dev Team Skills — Migration Lifecycle <span class="ct">12</span></h3>
+<table><thead><tr><th>Source</th><th>Skill</th><th>Description</th><th>Status</th></tr></thead><tbody>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Analyze-classic-gui-screen</td><td class="ds">3 sub-agents: source (14+ searches), metadata SQL, CodeGen XML. 5 markdown files. <code>RES_MSG_*</code> resolution.</td><td class="st">✅ Done</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Spec-screen</td><td class="ds">Screen-Spec.md — canonical blueprint: DB, data objects, layout, every BR, lookups, Notes, open questions.</td><td class="st">✅ Done</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Analyze-ado-stories</td><td class="ds">4-way gap analysis of our ADO stories vs Screen-Spec. Feeds Audit + Unit Test skills.</td><td class="st">✅ Stable</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Migrate-foundation-CRUD</td><td class="ds">9-phase foundation + CRUD. UIController, MVC, ViewModels, views, JS, services.</td><td class="st">⚠️ Needs work</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Migrate-validations</td><td class="ds">4-tier implementation. Tiers 1–3 no-stubs; Tier 4 stubbed. SQL registration.</td><td class="st">🔄 TDD rebuild</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Migrate-special</td><td class="ds">Batch actions, Notes (from CRUD), UIC methods, MVC actions, JS handlers.</td><td class="st">🔄 Assessment</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Audit-screen</td><td class="ds">6-category gap analysis. <strong>Migration readiness gate blocks on contradictions.</strong></td><td class="st">🔄 Reviewing</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Remediate-screen</td><td class="ds">Applies audit fixes. Never auto-remediates contradictions.</td><td class="st">🔄 Reviewing</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Unit-test-foundation-CRUD</td><td class="ds">CRUD MSTest: TestData, TestContext, UIControllerTests, IntegrationTests, ServiceCoreTests.</td><td class="st">🔄 Adjusted</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Unit-test-validations</td><td class="ds">Validation MSTest: pass + fail per Tier 1–3 rule. Invalid DO factories.</td><td class="st">🔄 Adjusted</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Unit-test-special</td><td class="ds">Batch MSTest: one test per SubmitProcess. Appends to UIControllerTests.</td><td class="st">🔄 Adjusted</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">Document-screen</td><td class="ds">End-user HTML spec + developer Markdown reference.</td><td class="st">📋 Later</td></tr>
+</tbody></table>
+</div>
+
+<div class="grp">
+<h3>Context Files — Project &amp; Domain <span class="ct">7</span></h3>
+<table><thead><tr><th>Source</th><th>File</th><th>Description</th><th>Load When</th></tr></thead><tbody>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">eam-project-instructions.md</td><td class="ds">Domain background, ADO defaults, active Feature IDs, personas.</td><td class="st">Every session</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">project-context.md</td><td class="ds">Scope, timeline, team, sprints, Definition of Done.</td><td class="st">Orienting</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">project_personas.md</td><td class="ds">User personas for "As a..." — Revenue Analyst, Accountant, Admin.</td><td class="st">Phase 3</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">screen-inventory.md</td><td class="ds">Screen list with module/type/status. Gap counts outdated — use Matrix.</td><td class="st">Phase 1</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">Effort-Priority-Matrix.md</td><td class="ds"><strong>Authoritative</strong> screen profiles. CodeGen, tables, BRs, effort, complexity.</td><td class="st">Phase 1</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">DRI_Footprint_Screens.xlsx</td><td class="ds">DRI module footprint — DRI table touches, cross-module deps.</td><td class="st">DRI screens</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">SETUP.md</td><td class="ds">GitHub MCP configuration guide.</td><td class="st">Setup only</td></tr>
+</tbody></table>
+</div>
+
+<div class="grp">
+<h3>Context Files — Codebase Reference <span class="ct">6</span></h3>
+<table><thead><tr><th>Source</th><th>File</th><th>Description</th><th>Load When</th></tr></thead><tbody>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">upstream-codebase-guide.md</td><td class="ds">Full technical reference — all products, shared infra, screen-to-code.</td><td class="st">Phase 1</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">upstream-codebase-reference.md</td><td class="ds">Quick-ref: table patterns, base classes, namespaces.</td><td class="st">Phase 1</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">dri-module.md</td><td class="ds">DRI deep dive — revenue input, volume allocation, effective dating.</td><td class="st">DRI/VL</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">qra-modules.md</td><td class="ds">QRA: VL, JE, CW, VA, DO, MF, TS, TV, TR.</td><td class="st">QRA</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">qdo-qca-qcfs.md</td><td class="ds">Division Orders, Cost Accounting, Consolidated Financials.</td><td class="st">QDO/QCA/QCFS</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">batch-and-qpec.md</td><td class="ds">Batch architecture, QPEC lifecycle, shared batch infra.</td><td class="st">Batch screens</td></tr>
+</tbody></table>
+</div>
+
+<div class="grp">
+<h3>Context Files — Templates &amp; Libraries <span class="ct">5</span></h3>
+<table><thead><tr><th>Source</th><th>File</th><th>Description</th><th>Load When</th></tr></thead><tbody>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">eam-workflow.md</td><td class="ds">This workflow — phases, gates, sequence. <strong>v2.0 current.</strong></td><td class="st">Every session</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">eam-story-core.md</td><td class="ds">Description + AC templates. <strong>Mandatory before any HTML.</strong></td><td class="st">Phase 3</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">eam-ac-library.md</td><td class="ds">Standard AC patterns with wiki §1–§26 references.</td><td class="st">Phase 3</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">eam-decomposition.md</td><td class="ds">Story Sequence v6.1, capability slots, split/merge rules.</td><td class="st">Phase 2</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">eam-user-story-template-learnings.md</td><td class="ds">Session learnings — corrections, patterns, before/after.</td><td class="st">Close</td></tr>
+</tbody></table>
+</div>
+
+<div class="grp">
+<h3>Context Files — ADO &amp; Process <span class="ct">4</span></h3>
+<table><thead><tr><th>Source</th><th>File</th><th>Description</th><th>Load When</th></tr></thead><tbody>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">ado-connection.md</td><td class="ds">ADO MCP bootstrap — auth, org/project resolution.</td><td class="st">Phase 5</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">safe-popm-best-practices.md</td><td class="ds">SAFe reference — Features, Stories, WSJF, ACs, hypotheses.</td><td class="st">Phases 2–4</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">skill-learnings.md</td><td class="ds">Accumulated session learnings and pattern corrections.</td><td class="st">Close</td></tr>
+  <tr><td><span class="src src-p">Products</span></td><td class="nm">safe-templates.md</td><td class="ds">SAFe artifact templates — Feature, Enabler, spike.</td><td class="st">Features</td></tr>
+</tbody></table>
+</div>
+
+<div class="grp">
+<h3>Live Connections <span class="ct">2</span></h3>
+<table><thead><tr><th>Source</th><th>Connection</th><th>Description</th><th>Used In</th></tr></thead><tbody>
+  <tr><td><span class="src src-m">MCP</span></td><td class="nm">quorum-metadata-dev</td><td class="ds">SQL Server metadata — grid config, columns, code tables, pick lists, registered SQL via QARCH_* tables.</td><td class="st">Phase 1.5</td></tr>
+  <tr><td><span class="src src-m">MCP</span></td><td class="nm">azure-devops</td><td class="ds">ADO MCP — work items, wiki, code search, repos in QuorumSoftware org.</td><td class="st">Phases 1, 5</td></tr>
+</tbody></table>
+</div>
+
+</div>
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- DEV TEAM ASSETS                          -->
+<!-- ════════════════════════════════════════ -->
+<div id="dev" class="sec">
+<div class="wrap">
+<h2 class="sec-t">Dev Team Assets We Consume</h2>
+<p class="sec-d">Artifacts from <code>Quorum-Enterprise/Quorum.Upstream.AITools</code>. Read-only inputs to our workflow.</p>
+
+<div class="legend">
+  <div class="legend-item"><span class="src src-d">Dev Team</span> We consume, never modify</div>
+</div>
+
+<div class="grp">
+<h3>Analysis Files <span class="ct">5 per screen × 30+ screens</span></h3>
+<table><thead><tr><th>Source</th><th>File</th><th>What We Extract</th><th>Used In</th></tr></thead><tbody>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">[ID]-Overview.md</td><td class="ds">Purpose, base class, primary table, grids, code tables, pick lists, BR summary, navigation.</td><td class="st">1.3</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">[ID]-Technical-Analysis.md</td><td class="ds">All methods, BR details, <strong>resolved <code>RES_MSG_*</code></strong>, batch launches, service deps.</td><td class="st">1.3, 1.6</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">[ID]-SQL-Analysis.md</td><td class="ds">Registered SQL keys, full SQL text, DML ops, tables per operation.</td><td class="st">1.3</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">[ID]-CodeGen-Analysis.md</td><td class="ds">CodeGen status per table, which layers need generation.</td><td class="st">1.3</td></tr>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">[ID]-Test-Scenarios.md</td><td class="ds">Edge cases, config keys, permissions, data integrity. Informs -QA ACs.</td><td class="st">3</td></tr>
+</tbody></table>
+</div>
+
+<div class="grp">
+<h3>Screen-Spec <span class="ct">1 per screen</span></h3>
+<table><thead><tr><th>Source</th><th>File</th><th>What We Extract</th><th>Used In</th></tr></thead><tbody>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">[ID]-Screen-Spec.md</td><td class="ds">Canonical blueprint: DB, data objects, service layer, layout, <strong>every BR individually</strong>, lookups, context deps, special behaviors, Notes workflow, grid flags, open questions.</td><td class="st">1.3, 4.5c</td></tr>
+</tbody></table>
+</div>
+
+<div class="grp">
+<h3>ADO Story Analysis <span class="ct">1 per screen (when run)</span></h3>
+<table><thead><tr><th>Source</th><th>File</th><th>What We Extract</th><th>Used In</th></tr></thead><tbody>
+  <tr><td><span class="src src-d">Dev Team</span></td><td class="nm">[ID]-ADO-Story-Analysis.md</td><td class="ds">4-way gap: stories→spec, spec→stories, <strong>contradictions (block pipeline)</strong>, open questions.</td><td class="st">1.3c, Feedback</td></tr>
+</tbody></table>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+document.querySelectorAll('.tbtn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.tbtn').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.sec').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    document.getElementById(b.dataset.t).classList.add('on');
+  });
+});
+</script>
+</body>
+</html>
